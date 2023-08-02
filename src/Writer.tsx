@@ -8,6 +8,8 @@ interface IAppState {
     isSubmitted: boolean;
     markdownText: string;
     isFinished: boolean;
+    hasError: boolean;
+    errorMessage: string;
 }
 
 export default class Writer extends Component<{}, IAppState> {
@@ -21,6 +23,8 @@ export default class Writer extends Component<{}, IAppState> {
             isSubmitted: false,
             markdownText: '',
             isFinished: false,
+            hasError: false,
+            errorMessage: '',
         };
     }
     public render() {
@@ -74,6 +78,12 @@ export default class Writer extends Component<{}, IAppState> {
                 <div className="content markdownContent">
                     <ReactMarkdown>{this.state.markdownText}</ReactMarkdown>
                 </div>
+
+                {this.state.hasError && (
+                    <div className="notification is-danger">
+                        <strong>An error occurred:</strong> {this.state.errorMessage}
+                    </div>
+                )}
             </>
         );
     }
@@ -89,9 +99,9 @@ export default class Writer extends Component<{}, IAppState> {
                     window.scrollTo(0, document.body.scrollHeight);
                 }
 
-                //this.setState({ isFinished: true });
+                this.setState({ isFinished: true });
             })
-            .catch((err) => console.error(err));
+            .catch(error => this.setState({ hasError: true, errorMessage: error.message }));
     }
 
     private handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
