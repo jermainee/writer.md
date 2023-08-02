@@ -81,15 +81,15 @@ export default class Writer extends Component<{}, IAppState> {
 
                 {!this.state.isFinished && <div className="loading">◇</div>}
 
-                <div className="has-text-right">
-                    <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
-                </div>
-
                 {this.state.hasError && (
                     <div className="notification is-danger">
                         <strong>An error occurred:</strong> {this.state.errorMessage}
                     </div>
                 )}
+
+                <div className="has-text-right">
+                    <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
+                </div>
             </>
         );
     }
