@@ -7,6 +7,7 @@ interface IAppState {
     apiKey: string;
     isSubmitted: boolean;
     markdownText: string;
+    isFinished: boolean;
 }
 
 export default class Writer extends Component<{}, IAppState> {
@@ -15,10 +16,11 @@ export default class Writer extends Component<{}, IAppState> {
         super(props);
         this.state = {
             keyword: null,
-            language: 'de',
+            language: 'en',
             apiKey: localStorage.getItem("api_key") ?? '',
             isSubmitted: false,
             markdownText: '',
+            isFinished: false,
         };
     }
     public render() {
@@ -38,7 +40,11 @@ export default class Writer extends Component<{}, IAppState> {
                             <div className="control">
                                 <div className="select is-fullwidth">
                                     <select onChange={this.handleLanguageChange}>
+                                        <option value="en">English (US)</option>
                                         <option value="de">German (DE)</option>
+                                        <option value="nl">Dutch (NL)</option>
+                                        <option value="es">Spanish (ES)</option>
+                                        <option value="it">Italian (IT)</option>
                                     </select>
                                 </div>
                             </div>
@@ -65,7 +71,7 @@ export default class Writer extends Component<{}, IAppState> {
         return (
             <>
                 <hr/>
-                <div className="content">
+                <div className="content markdownContent">
                     <ReactMarkdown>{this.state.markdownText}</ReactMarkdown>
                 </div>
             </>
@@ -73,14 +79,17 @@ export default class Writer extends Component<{}, IAppState> {
     }
 
     private fetchWriterResponse = () => {
-        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=${this.state.apiKey}&language=${this.state.language}`)
+        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=${this.state.apiKey}&language=${this.state.language}`, { keepalive: true })
             .then(async (response) => {
                 // response.body is a ReadableStream
                 // @ts-ignore
                 const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
                 for await (const chunk of this.readChunks(reader)) {
                     this.setState({ markdownText: this.state.markdownText + chunk });
+                    window.scrollTo(0, document.body.scrollHeight);
                 }
+
+                //this.setState({ isFinished: true });
             })
             .catch((err) => console.error(err));
     }
@@ -100,9 +109,7 @@ export default class Writer extends Component<{}, IAppState> {
 
     private handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(this.state.keyword);
         this.setState({ isSubmitted: true });
-
         this.fetchWriterResponse();
     }
 
