@@ -35,7 +35,7 @@ export default class Writer extends Component<{}, IAppState> {
                         <div className="field">
                             <label className="label">Target keyword</label>
                             <div className="control">
-                                <input onChange={this.handleKeywordChange} className="input" type="text" placeholder="What is the keyword?" required={true} autoFocus={true}/>
+                                <input onChange={this.handleKeywordChange} className="input" type="text" placeholder="What is the keyword or topic?" required={true} autoFocus={true}/>
                             </div>
                         </div>
 
