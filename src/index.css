@@ -2,5 +2,5 @@
 @import "../node_modules/bulma/css/bulma.min.css";
 
 .container {
-    max-width: 800px;
+    max-width: 680px !important;
 }

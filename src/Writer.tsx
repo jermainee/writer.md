@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown'
 
 interface IAppState {
     keyword: string|null;
+    language: string|null;
+    apiKey: string;
     isSubmitted: boolean;
     markdownText: string;
 }
@@ -13,6 +15,8 @@ export default class Writer extends Component<{}, IAppState> {
         super(props);
         this.state = {
             keyword: null,
+            language: 'de',
+            apiKey: localStorage.getItem("api_key") ?? '',
             isSubmitted: false,
             markdownText: '',
         };
@@ -20,23 +24,41 @@ export default class Writer extends Component<{}, IAppState> {
     public render() {
         if (!this.state.isSubmitted) {
             return (
-                <form onSubmit={this.handleFormSubmit}>
-                    <div className="field has-addons">
-                        <div className="control">
-                            <div className="select">
-                                <select>
-                                    <option value="de">🇩🇪</option>
-                                </select>
+                <div className="notification">
+                    <form onSubmit={this.handleFormSubmit}>
+                        <div className="field">
+                            <label className="label">Target keyword</label>
+                            <div className="control">
+                                <input onChange={this.handleKeywordChange} className="input" type="text" placeholder="What is the keyword?"/>
                             </div>
                         </div>
-                        <div className="control">
-                            <input onChange={this.handleInputChange} className="input" type="text" placeholder="What is the keyword?"/>
+
+                        <div className="field">
+                            <label className="label">Language</label>
+                            <div className="control">
+                                <div className="select is-fullwidth">
+                                    <select onChange={this.handleLanguageChange}>
+                                        <option value="de">German (DE)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div className="control">
-                            <button type="submit" className="button has-text-weight-bold"><span className="is-hidden">create draft</span>›</button>
+
+                        <div className="field">
+                            <label className="label">API key</label>
+                            <div className="control">
+                                <input onChange={this.handleApiKeyChange} className="input" type="text" value={this.state.apiKey} placeholder="Enter your OpenAI API key"/>
+                            </div>
+                            <div className="is-size-7">The API key will be stored locally in your browser. <a href="https://platform.openai.com/account/api-keys" target="_blank">You find your API key in the OpenAI dashboard.</a></div>
                         </div>
-                    </div>
-                </form>
+
+                        <div className="field">
+                            <div className="control">
+                                <button type="submit" className="button has-text-weight-bold is-fullwidth">Create draft</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             );
         }
 
@@ -51,7 +73,7 @@ export default class Writer extends Component<{}, IAppState> {
     }
 
     private fetchWriterResponse = () => {
-        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=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`)
+        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=${this.state.apiKey}&language=${this.state.language}`)
             .then(async (response) => {
                 // response.body is a ReadableStream
                 // @ts-ignore
@@ -63,9 +85,19 @@ export default class Writer extends Component<{}, IAppState> {
             .catch((err) => console.error(err));
     }
 
-    private handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ keyword: event.target.value });
     }
+
+    private handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        this.setState({ language: event.target.value });
+    }
+
+    private handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        localStorage.setItem("api_key", event.target.value);
+        this.setState({ apiKey: event.target.value });
+    }
+
     private handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(this.state.keyword);
