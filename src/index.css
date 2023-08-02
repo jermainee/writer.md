@@ -4,3 +4,17 @@
 .container {
     max-width: 680px !important;
 }
+
+.loading {
+    width: 1rem;
+    animation: rotation 1s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}

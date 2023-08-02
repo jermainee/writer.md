@@ -35,7 +35,7 @@ export default class Writer extends Component<{}, IAppState> {
                         <div className="field">
                             <label className="label">Target keyword</label>
                             <div className="control">
-                                <input onChange={this.handleKeywordChange} className="input" type="text" placeholder="What is the keyword?"/>
+                                <input onChange={this.handleKeywordChange} className="input" type="text" placeholder="What is the keyword?" required={true} autoFocus={true}/>
                             </div>
                         </div>
 
@@ -77,6 +77,12 @@ export default class Writer extends Component<{}, IAppState> {
                 <hr/>
                 <div className="content markdownContent">
                     <ReactMarkdown>{this.state.markdownText}</ReactMarkdown>
+                </div>
+
+                {!this.state.isFinished && <div className="loading">◇</div>}
+
+                <div className="has-text-right">
+                    <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
                 </div>
 
                 {this.state.hasError && (
