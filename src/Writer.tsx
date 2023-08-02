@@ -8,6 +8,7 @@ interface IAppState {
 }
 
 export default class Writer extends Component<{}, IAppState> {
+    private readonly apiUrl = "https://openai-blog-writer-5c211a15388c.herokuapp.com/";
     public constructor(props: {}) {
         super(props);
         this.state = {
@@ -50,7 +51,7 @@ export default class Writer extends Component<{}, IAppState> {
     }
 
     private fetchWriterResponse = () => {
-        fetch(`http://127.0.0.1:5001/generate/${this.state.keyword}?openai_key=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`)
+        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=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`)
             .then(async (response) => {
                 // response.body is a ReadableStream
                 // @ts-ignore
