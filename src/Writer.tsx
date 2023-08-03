@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactMarkdown from 'react-markdown'
+import {remark} from 'remark'
+import strip from 'strip-markdown'
 
 interface IAppState {
     keyword: string|null;
@@ -7,6 +9,7 @@ interface IAppState {
     apiKey: string;
     isSubmitted: boolean;
     markdownText: string;
+    plainText: string;
     isFinished: boolean;
     hasError: boolean;
     errorMessage: string;
@@ -22,6 +25,7 @@ export default class Writer extends Component<{}, IAppState> {
             apiKey: localStorage.getItem("api_key") ?? '',
             isSubmitted: false,
             markdownText: '',
+            plainText: '',
             isFinished: false,
             hasError: false,
             errorMessage: '',
@@ -79,20 +83,23 @@ export default class Writer extends Component<{}, IAppState> {
                     <ReactMarkdown>{this.state.markdownText}</ReactMarkdown>
                 </div>
 
-                {!this.state.isFinished && <div className="loading">◇</div>}
-
                 {this.state.hasError && (
                     <div className="notification is-danger">
                         <strong>An error occurred:</strong> {this.state.errorMessage}
                     </div>
                 )}
 
-                <div className="columns">
+                {!this.state.isFinished && <div className="loading">◇</div>}
+
+                <div className="columns is-mobile is-vcentered">
                     <div className="column">
-                        {this.state.markdownText.split(' ').length} words generated
+                        {this.state.plainText.split(' ').length-1} words
                     </div>
                     <div className="column is-narrow">
-                        <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
+                        <div className="buttons">
+                            <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.plainText)}`} download={`${this.state.keyword}.txt`}>download plaintext</a>
+                            <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.md`}>download markdown</a>
+                        </div>
                     </div>
                 </div>
             </>
@@ -108,6 +115,13 @@ export default class Writer extends Component<{}, IAppState> {
                 for await (const chunk of this.readChunks(reader)) {
                     this.setState({ markdownText: this.state.markdownText + chunk });
                     window.scrollTo(0, document.body.scrollHeight);
+
+                    remark()
+                        .use(strip)
+                        .process(this.state.markdownText)
+                        .then((file) => {
+                            this.setState({ plainText: String(file) })
+                        })
                 }
 
                 this.setState({ isFinished: true });
