@@ -87,8 +87,13 @@ export default class Writer extends Component<{}, IAppState> {
                     </div>
                 )}
 
-                <div className="has-text-right">
-                    <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
+                <div className="columns">
+                    <div className="column">
+                        {this.state.markdownText.split(' ').length} words generated
+                    </div>
+                    <div className="column is-narrow">
+                        <a className="button" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.txt`}>download markdown</a>
+                    </div>
                 </div>
             </>
         );
