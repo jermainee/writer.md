@@ -57,7 +57,7 @@ export default class Writer extends Component<{}, IAppState> {
                         <div className="field">
                             <label className="label">API key</label>
                             <div className="control">
-                                <input onChange={this.handleApiKeyChange} className="input" type="text" value={this.state.apiKey} placeholder="Enter your OpenAI API key"/>
+                                <input onChange={this.handleApiKeyChange} className="input" type="text" value={this.state.apiKey} placeholder="Enter your OpenAI API key" required={true}/>
                             </div>
                             <div className="is-size-7">The API key will only be stored locally in your browser. <a href="https://platform.openai.com/account/api-keys" target="_blank noreferrer">You find your API key in the OpenAI dashboard.</a></div>
                         </div>
