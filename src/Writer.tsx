@@ -16,7 +16,7 @@ interface IAppState {
 }
 
 export default class Writer extends Component<{}, IAppState> {
-    private readonly apiUrl = "https://writer-api-4f51528797cc.herokuapp.com/";
+    private readonly apiUrl = "https://api.writer.md/";
     public constructor(props: {}) {
         super(props);
         this.state = {
