@@ -1,13 +1,36 @@
 @charset "utf-8";
 @import "../node_modules/bulma/css/bulma.min.css";
 
-.container {
+.container.is-small {
     max-width: 680px !important;
+}
+
+.button.is-dummy, .button.is-dummy:hover {
+    text-decoration: none;
+    background-color: #fff;
+    cursor: default;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: .5rem
+}
+
+.header__logo {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.w-md-editor-fullscreen {
+    margin-top: 46px;
 }
 
 .loading {
     width: 1rem;
     animation: rotation 1s infinite linear;
+    display: inline-block;
 }
 
 @keyframes rotation {
