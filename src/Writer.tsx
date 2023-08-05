@@ -57,6 +57,10 @@ export default class Writer extends Component<{}, IAppState> {
             <div className="hero">
                 <div className="hero-body">
                     <div className="container is-small">
+                        <div className="subtitle has-text-centered">
+                            Create SEO optimized blog post drafts using AI
+                        </div>
+
                         <div className="notification is-blank">
                             <form onSubmit={this.handleFormSubmit}>
                                 <div className="field">
