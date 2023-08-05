@@ -1,13 +1,57 @@
 @charset "utf-8";
 @import "../node_modules/bulma/css/bulma.min.css";
 
-.container {
+body {
+    max-height: 100%;
+}
+.container.is-small {
     max-width: 680px !important;
+}
+
+.button.is-dummy, .button.is-dummy:hover {
+    text-decoration: none;
+    background-color: #fff;
+    cursor: default;
+}
+
+.writerHeader {
+    width: 100%;
+    height: 46px;
+    padding: .5rem;
+}
+
+.writerContainer {
+    display: block;
+    position: absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
+}
+
+.writerHeader__logo {
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.writerEditor {
+    height: calc(100vh - 46px);
+}
+
+.w-md-editor {
+    box-shadow: none;
+    border-top: 1px solid #dbdbdb;
+}
+
+.writerEditor .w-md-editor-content {
 }
 
 .loading {
     width: 1rem;
     animation: rotation 1s infinite linear;
+    display: inline-block;
 }
 
 @keyframes rotation {
