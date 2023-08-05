@@ -42,13 +42,22 @@ export default class Writer extends Component<{}, IAppState> {
 
     private renderParameterForm = () => {
         return (<>
+            <header className="writerHeader">
+                <div className="columns is-mobile is-vcentered">
+                    <div className="column">
+                        <span className="writerHeader__logo" onClick={() => window.location.reload()}>📝 writer.md</span>
+                    </div>
+                    <div className="column is-narrow">
+                            <span className="buttons">
+                                <span className="button is-text is-dummy is-small"></span>
+                            </span>
+                    </div>
+                </div>
+            </header>
             <div className="hero">
                 <div className="hero-body">
                     <div className="container is-small">
-                        <div className="title">📝 writer.md</div>
-                        <div className="subtitle">Create SEO optimized blog post drafts using AI</div>
-
-                        <div className="notification">
+                        <div className="notification is-blank">
                             <form onSubmit={this.handleFormSubmit}>
                                 <div className="field">
                                     <label className="label">Target keyword</label>
@@ -82,7 +91,7 @@ export default class Writer extends Component<{}, IAppState> {
 
                                 <div className="field">
                                     <div className="control">
-                                        <button type="submit" className="button has-text-weight-bold is-fullwidth">Create draft</button>
+                                        <button type="submit" className="button is-light has-text-weight-bold is-fullwidth">Create draft</button>
                                     </div>
                                 </div>
                             </form>
@@ -99,10 +108,9 @@ export default class Writer extends Component<{}, IAppState> {
                 <header className="writerHeader">
                     <div className="columns is-mobile is-vcentered">
                         <div className="column">
-                            <span className="writerHeader__logo" onClick={() => window.location.reload()}>writer.md</span>
+                            <span className="writerHeader__logo" onClick={() => window.location.reload()}>📝 writer.md</span>
                         </div>
                         <div className="column is-narrow">
-
                             <span className="buttons">
                                 <span className="button is-text is-dummy is-small">
                                     Status:&nbsp;{this.state.isFinished ? 'finished' : (<span>generating <span className="loading">◇</span></span>)}

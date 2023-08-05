@@ -8,6 +8,12 @@ body {
     max-width: 680px !important;
 }
 
+.notification.is-blank  {
+    box-shadow: none;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+}
+
 .button.is-dummy, .button.is-dummy:hover {
     text-decoration: none;
     background-color: #fff;
@@ -18,6 +24,7 @@ body {
     width: 100%;
     height: 46px;
     padding: .5rem;
+    border-bottom: 1px solid #dbdbdb;
 }
 
 .writerContainer {
@@ -42,7 +49,6 @@ body {
 
 .w-md-editor {
     box-shadow: none;
-    border-top: 1px solid #dbdbdb;
 }
 
 .writerEditor .w-md-editor-content {
