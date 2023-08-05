@@ -1,6 +1,9 @@
 @charset "utf-8";
 @import "../node_modules/bulma/css/bulma.min.css";
 
+body {
+    max-height: 100%;
+}
 .container.is-small {
     max-width: 680px !important;
 }
@@ -12,25 +15,37 @@
 }
 
 .writerHeader {
-    top: 0;
     width: 100%;
     height: 46px;
     padding: .5rem;
+}
+
+.writerContainer {
+    display: block;
+    position: absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
 }
 
 .writerHeader__logo {
     font-size: 1rem;
     font-weight: bold;
+    cursor: pointer;
 }
 
-.writerFooter {
+.writerEditor {
+    height: calc(100vh - 46px);
+}
+
+.w-md-editor {
+    box-shadow: none;
     border-top: 1px solid #dbdbdb;
-    z-index: 100000;
-    bottom: 0;
-    width: 100%;
-    height: 46px;
-    padding: .5rem;
-    font-size: .8rem;
+}
+
+.writerEditor .w-md-editor-content {
 }
 
 .loading {

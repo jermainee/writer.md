@@ -95,15 +95,18 @@ export default class Writer extends Component<{}, IAppState> {
 
     private renderMarkdownEditor = () => {
         return (
-            <>
+            <div className="writerContainer">
                 <header className="writerHeader">
                     <div className="columns is-mobile is-vcentered">
                         <div className="column">
-                            <span className="writerHeader__logo">writer.md</span>
+                            <span className="writerHeader__logo" onClick={() => window.location.reload()}>writer.md</span>
                         </div>
                         <div className="column is-narrow">
 
                             <span className="buttons">
+                                <span className="button is-text is-dummy is-small">
+                                    Status:&nbsp;{this.state.isFinished ? 'finished' : (<span>generating <span className="loading">◇</span></span>)}
+                                </span>
                                 <span className="button is-text is-dummy is-small">{this.state.plainText.split(' ').length-1} words</span>
                                 <a className="button is-small" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.plainText)}`} download={`${this.state.keyword}.txt`}>download plaintext</a>
                                 <a className="button is-small" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.md`}>download markdown</a>
@@ -116,19 +119,14 @@ export default class Writer extends Component<{}, IAppState> {
                     <MDEditor
                         value={this.state.markdownText}
                         onChange={markdownText => this.updateText(markdownText ?? '', false)}
+                        height="100%"
+                        visibleDragbar={false}
+                        overflow={false}
                         previewOptions={{
                             rehypePlugins: [[rehypeSanitize]],
                         }}
                     />
                 </section>
-
-                <footer className="writerFooter">
-                    <div className="buttons">
-                        <span className="button is-small is-white is-dummy">
-                            Status:&nbsp;{this.state.isFinished ? 'finished' : (<span>generating <span className="loading">◇</span></span>)}
-                        </span>
-                    </div>
-                </footer>
 
                 {this.state.hasError && (
                     <div className="modal is-active">
@@ -141,7 +139,7 @@ export default class Writer extends Component<{}, IAppState> {
                         <button className="modal-close is-large" aria-label="close"></button>
                     </div>
                 )}
-            </>
+            </div>
         );
     }
 
@@ -188,7 +186,7 @@ export default class Writer extends Component<{}, IAppState> {
     private handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.setState({ isSubmitted: true });
-        //this.fetchWriterResponse();
+        this.fetchWriterResponse();
     }
 
     private readChunks(reader: ReadableStreamDefaultReader) {
