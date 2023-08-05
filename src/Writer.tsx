@@ -108,8 +108,8 @@ export default class Writer extends Component<{}, IAppState> {
                                     Status:&nbsp;{this.state.isFinished ? 'finished' : (<span>generating <span className="loading">◇</span></span>)}
                                 </span>
                                 <span className="button is-text is-dummy is-small">{this.state.plainText.split(' ').length-1} words</span>
-                                <a className="button is-small" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.plainText)}`} download={`${this.state.keyword}.txt`}>download plaintext</a>
-                                <a className="button is-small" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.md`}>download markdown</a>
+                                <a className="button is-small is-hidden-mobile" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.plainText)}`} download={`${this.state.keyword}.txt`}>download plaintext</a>
+                                <a className="button is-small is-hidden-mobile" href={`data:text/plain;charset=utf-8, ${encodeURIComponent(this.state.markdownText)}`} download={`${this.state.keyword}.md`}>download markdown</a>
                             </span>
                         </div>
                     </div>
