@@ -57,7 +57,7 @@ export default class Writer extends Component<{}, IAppState> {
             <div className="hero">
                 <div className="hero-body">
                     <div className="container is-small">
-                        <div className="subtitle has-text-centered">
+                        <div className="subtitle has-text-centered has-text-weight-bold">
                             Create SEO optimized blog post drafts using AI
                         </div>
 
