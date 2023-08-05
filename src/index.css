@@ -11,20 +11,26 @@
     cursor: default;
 }
 
-.header {
-    position: fixed;
+.writerHeader {
     top: 0;
     width: 100%;
-    padding: .5rem
+    height: 46px;
+    padding: .5rem;
 }
 
-.header__logo {
+.writerHeader__logo {
     font-size: 1rem;
     font-weight: bold;
 }
 
-.w-md-editor-fullscreen {
-    margin-top: 46px;
+.writerFooter {
+    border-top: 1px solid #dbdbdb;
+    z-index: 100000;
+    bottom: 0;
+    width: 100%;
+    height: 46px;
+    padding: .5rem;
+    font-size: .8rem;
 }
 
 .loading {

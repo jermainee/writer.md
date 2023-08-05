@@ -96,11 +96,10 @@ export default class Writer extends Component<{}, IAppState> {
     private renderMarkdownEditor = () => {
         return (
             <>
-                <header className="header">
+                <header className="writerHeader">
                     <div className="columns is-mobile is-vcentered">
                         <div className="column">
-                            <span className="header__logo">📝 writer.md</span>
-                            {!this.state.isFinished && <div className="loading">◇</div>}
+                            <span className="writerHeader__logo">writer.md</span>
                         </div>
                         <div className="column is-narrow">
 
@@ -113,18 +112,33 @@ export default class Writer extends Component<{}, IAppState> {
                     </div>
                 </header>
 
-                <MDEditor
-                    value={this.state.markdownText}
-                    onChange={markdownText => this.setState({ markdownText: markdownText ?? '' })}
-                    fullscreen={true}
-                    previewOptions={{
-                        rehypePlugins: [[rehypeSanitize]],
-                    }}
-                />
+                <section className="writerEditor">
+                    <MDEditor
+                        value={this.state.markdownText}
+                        onChange={markdownText => this.updateText(markdownText ?? '', false)}
+                        previewOptions={{
+                            rehypePlugins: [[rehypeSanitize]],
+                        }}
+                    />
+                </section>
+
+                <footer className="writerFooter">
+                    <div className="buttons">
+                        <span className="button is-small is-white is-dummy">
+                            Status:&nbsp;{this.state.isFinished ? 'finished' : (<span>generating <span className="loading">◇</span></span>)}
+                        </span>
+                    </div>
+                </footer>
 
                 {this.state.hasError && (
-                    <div className="notification is-danger">
-                        <strong>An error occurred:</strong> {this.state.errorMessage}
+                    <div className="modal is-active">
+                        <div className="modal-background"></div>
+                        <div className="modal-content">
+                            <div className="notification is-danger">
+                                <strong>An error occurred:</strong> {this.state.errorMessage}
+                            </div>
+                        </div>
+                        <button className="modal-close is-large" aria-label="close"></button>
                     </div>
                 )}
             </>
@@ -138,20 +152,24 @@ export default class Writer extends Component<{}, IAppState> {
                 // @ts-ignore
                 const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
                 for await (const chunk of this.readChunks(reader)) {
-                    this.setState({ markdownText: this.state.markdownText + chunk });
-                    window.scrollTo(0, document.body.scrollHeight);
-
-                    remark()
-                        .use(strip)
-                        .process(this.state.markdownText)
-                        .then((file) => {
-                            this.setState({ plainText: String(file) })
-                        })
+                    this.updateText(chunk, true);
+                    //window.scrollTo(0, document.body.scrollHeight);
                 }
 
                 this.setState({ isFinished: true });
             })
             .catch(error => this.setState({ hasError: true, errorMessage: error.message }));
+    }
+
+    private updateText = (text: string, isChunk: boolean) => {
+        this.setState({ markdownText: isChunk ? this.state.markdownText + text : text });
+
+        remark()
+            .use(strip)
+            .process(this.state.markdownText)
+            .then((file) => {
+                this.setState({ plainText: String(file) })
+            });
     }
 
     private handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +188,7 @@ export default class Writer extends Component<{}, IAppState> {
     private handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.setState({ isSubmitted: true });
-        this.fetchWriterResponse();
+        //this.fetchWriterResponse();
     }
 
     private readChunks(reader: ReadableStreamDefaultReader) {
