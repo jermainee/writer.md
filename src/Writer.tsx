@@ -136,7 +136,6 @@ export default class Writer extends Component<{}, IAppState> {
                                 <strong>An error occurred:</strong> {this.state.errorMessage}
                             </div>
                         </div>
-                        <button className="modal-close is-large" aria-label="close"></button>
                     </div>
                 )}
             </div>
@@ -151,7 +150,6 @@ export default class Writer extends Component<{}, IAppState> {
                 const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
                 for await (const chunk of this.readChunks(reader)) {
                     this.updateText(chunk, true);
-                    //window.scrollTo(0, document.body.scrollHeight);
                 }
 
                 this.setState({ isFinished: true });
