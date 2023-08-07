@@ -8,12 +8,6 @@ body {
     max-width: 680px !important;
 }
 
-.notification.is-blank  {
-    box-shadow: none;
-    background-color: #fff;
-    border: 1px solid #dbdbdb;
-}
-
 .button.is-dummy, .button.is-dummy:hover {
     text-decoration: none;
     background-color: #fff;
@@ -41,6 +35,13 @@ body {
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
+}
+
+.writerForm  {
+    background-color: #fff;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
 }
 
 .writerEditor {

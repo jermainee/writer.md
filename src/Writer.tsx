@@ -61,7 +61,7 @@ export default class Writer extends Component<{}, IAppState> {
                             Create SEO optimized blog post drafts using AI
                         </div>
 
-                        <div className="notification is-blank">
+                        <div className="writerForm">
                             <form onSubmit={this.handleFormSubmit}>
                                 <div className="field">
                                     <label className="label">Target keyword</label>
