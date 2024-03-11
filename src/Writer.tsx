@@ -7,7 +7,6 @@ import strip from 'strip-markdown'
 interface IAppState {
     keyword: string|null;
     language: string|null;
-    apiKey: string;
     isSubmitted: boolean;
     markdownText: string;
     plainText: string;
@@ -23,7 +22,6 @@ export default class Writer extends Component<{}, IAppState> {
         this.state = {
             keyword: null,
             language: 'en',
-            apiKey: localStorage.getItem("api_key") ?? '',
             isSubmitted: false,
             markdownText: '',
             plainText: '',
@@ -83,14 +81,6 @@ export default class Writer extends Component<{}, IAppState> {
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="field">
-                                    <label className="label">API key</label>
-                                    <div className="control">
-                                        <input onChange={this.handleApiKeyChange} className="input" type="password" value={this.state.apiKey} placeholder="Enter your OpenAI API key" required={true}/>
-                                    </div>
-                                    <div className="is-size-7">The API key will only be stored locally in your browser. <a href="https://platform.openai.com/account/api-keys" target="_blank noreferrer">You find your API key in the OpenAI dashboard.</a></div>
                                 </div>
 
                                 <div className="field">
@@ -155,7 +145,7 @@ export default class Writer extends Component<{}, IAppState> {
     }
 
     private fetchWriterResponse = () => {
-        fetch(`${this.apiUrl}/generate/${this.state.keyword}?openai_key=${this.state.apiKey}&language=${this.state.language}`, { keepalive: true })
+        fetch(`${this.apiUrl}/generate/${this.state.keyword}?language=${this.state.language}`, { keepalive: true })
             .then(async (response) => {
                 // response.body is a ReadableStream
                 // @ts-ignore
@@ -186,11 +176,6 @@ export default class Writer extends Component<{}, IAppState> {
 
     private handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.setState({ language: event.target.value });
-    }
-
-    private handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        localStorage.setItem("api_key", event.target.value);
-        this.setState({ apiKey: event.target.value });
     }
 
     private handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
