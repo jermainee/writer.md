@@ -90,8 +90,6 @@ export default class Writer extends Component<{}, IAppState> {
                                 </div>
                             </form>
                         </div>
-
-                        <a href="https://www.producthunt.com/products/writer-md?utm_source=badge-follow&utm_medium=badge&utm_souce=badge-writer&#0045;md" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/follow.svg?product_id=545749&theme=neutral" alt="writer&#0046;md - Create&#0032;SEO&#0032;optimized&#0032;blog&#0032;post&#0032;drafts&#0032;using&#0032;AI | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
                     </div>
                 </div>
             </div>
