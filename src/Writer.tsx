@@ -90,6 +90,10 @@ export default class Writer extends Component<{}, IAppState> {
                                 </div>
                             </form>
                         </div>
+
+                        <div className="notification" style={{ marginTop: "1rem" }}>
+                            This website is for sale. <a href="mailto:callous.ends0d@icloud.com?subject=writer.md">Contact me</a>
+                        </div>
                     </div>
                 </div>
             </div>
